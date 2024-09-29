@@ -1,0 +1,12 @@
+.castItem {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 200px;
+}
+
+.castItemName {
+  font-size: 18px;
+  font-weight: 500;
+}

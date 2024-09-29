@@ -1,5 +1,12 @@
+import { Link } from "react-router-dom";
+
 const NotFoundPage = () => {
-  return <div>NotFoundPage</div>;
+  return (
+    <div>
+      <h1>Sorry but page is not found...</h1>
+      <Link to="/">Home</Link>
+    </div>
+  );
 };
 
 export default NotFoundPage;

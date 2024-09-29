@@ -3,22 +3,23 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 0;
   margin-bottom: 16px;
-  border-bottom: 1px solid black;
+  box-shadow: 0px 2px 0px 0px rgba(46, 47, 66, 0.08),
+    0px 1px 0px 0px rgba(46, 47, 66, 0.16),
+    0px 2px 0px 0px rgba(46, 47, 66, 0.08);
 }
 
 .nav {
   display: flex;
-  gap: 4px;
+  gap: 16px;
 }
 
 .link {
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 16px 0;
   text-decoration: none;
   color: black;
   font-weight: 500;
+  transition: text-decoration 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .link:hover {
@@ -26,6 +27,5 @@
 }
 
 .active {
-  color: white;
-  background-color: orangered;
+  color: orangered;
 }
