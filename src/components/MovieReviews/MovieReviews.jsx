@@ -2,25 +2,39 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchReviewsById } from "../../services/api";
 import style from "./MovieReviews.module.css";
+import Loader from "../Loader/Loader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const MovieReviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState(null);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!movieId) return;
 
     const getReviews = async () => {
-      const data = await fetchReviewsById(movieId);
-      setReviews(data.results);
+      try {
+        setIsError(false);
+        setIsLoading(true);
+        const data = await fetchReviewsById(movieId);
+        setReviews(data.results);
+      } catch {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getReviews();
   }, [movieId]);
 
-  if (!reviews) return <h1>Loading...</h1>;
+  if (!reviews) return <Loader />;
 
   return (
     <div>
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
       <ul>
         {reviews.length > 0 ? (
           reviews.map((review) => (

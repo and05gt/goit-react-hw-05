@@ -2,25 +2,36 @@ import { useEffect, useState, useRef, Suspense } from "react";
 import { useParams, Outlet, Link, useLocation } from "react-router-dom";
 import { fetchMoviesById } from "../../services/api";
 import style from "./MovieDetailsPage.module.css";
+import Loader from "../../components/Loader/Loader";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const location = useLocation();
-
   const backLink = useRef(location.state ?? "/movies");
   const [movie, setMovie] = useState(null);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!movieId) return;
 
     const getMovieDetails = async () => {
-      const data = await fetchMoviesById(movieId);
-      setMovie(data);
+      try {
+        setIsError(false);
+        setIsLoading(true);
+        const data = await fetchMoviesById(movieId);
+        setMovie(data);
+      } catch {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getMovieDetails();
   }, [movieId]);
 
-  if (!movie) return <h1>Loading...</h1>;
+  if (!movie) return <Loader />;
 
   const { genres } = movie;
   const defaultImg =
@@ -28,6 +39,8 @@ const MovieDetailsPage = () => {
 
   return (
     <div>
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
       <Link className={style.linkBack} to={backLink.current}>
         Go back
       </Link>
@@ -72,7 +85,7 @@ const MovieDetailsPage = () => {
           </Link>
         </div>
       </div>
-      <Suspense fallback={<h2>Loading subpage...</h2>}>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
     </div>

@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
 import style from "./App.module.css";
 import { lazy, Suspense } from "react";
+import Loader from "./components/Loader/Loader";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage/MoviesPage"));
@@ -18,7 +19,7 @@ function App() {
   return (
     <div className={style.container}>
       <Navigation />
-      <Suspense fallback={<h1>Loading page...</h1>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
