@@ -6,6 +6,9 @@ const MovieList = ({ movies }) => {
 
   if (!movies) return;
 
+  const defaultImg =
+    "https://dummyimage.com/400x600/cdcdcd/000.jpg&text=No+poster";
+
   return (
     <div>
       <ul>
@@ -16,6 +19,14 @@ const MovieList = ({ movies }) => {
               to={`/movies/${movie.id.toString()}`}
               state={location}
             >
+              <img
+                src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
+                    : defaultImg
+                }
+                alt={movie.title}
+              />
               <p>{movie.title}</p>
             </Link>
           </li>
